@@ -8,21 +8,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
     <h1>Tetris Learner</h1>
     <nav>
-      {/* isLoggedIn ? (
-        <div>
-          {// The navbar will show these links after you log in }
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {// The navbar will show these links before you log in }
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      ) */}
+      <Link to="/">Home</Link>
     </nav>
     <hr />
   </div>
@@ -54,3 +40,19 @@ Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 };
+
+// {isLoggedIn ? (
+//   <div>
+//     {/* The navbar will show these links after you log in */}
+//     <Link to="/home">Home</Link>
+//     <a href="#" onClick={handleClick}>
+//       Logout
+//     </a>
+//   </div>
+// ) : (
+//   <div>
+//     {/* The navbar will show these links before you log in */}
+//     <Link to="/login">Login</Link>
+//     <Link to="/signup">Sign Up</Link>
+//   </div>
+// )}
