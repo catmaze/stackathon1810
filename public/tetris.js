@@ -114,13 +114,29 @@ class Piece {
         }
       }
     }
-    // this.fill(this.color);
+  }
+
+  moveDown() {
+    this.y++;
+    this.draw();
   }
 }
 
 let p = new Piece(PIECES[0][0], PIECES[0][1]);
 
 p.draw();
+
+let dropStart = Date.now();
+function drop() {
+  let now = Date.now();
+  let delta = now - dropStart;
+  if (delta > 1000) {
+    p.moveDown();
+    dropStart = Date.now();
+  }
+  requestAnimationFrame(drop);
+}
+drop();
 // drawSquare(5, 3, 'red');
 // drawSquare(3, 3, 'red');
 // drawSquare(3, 5, 'red');
