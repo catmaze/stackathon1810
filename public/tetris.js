@@ -102,8 +102,8 @@ class Piece {
     this.directionIndex = 0;
     this.activeTetromino = this.tetromino[this.directionIndex];
 
-    this.x = 0;
-    this.y = 0;
+    this.x = 3;
+    this.y = -2;
   }
 
   // draw piece on board
@@ -163,7 +163,7 @@ class Piece {
     let kick = 0;
 
     if (this.collision(0, 0, nextPattern)) {
-      if (this.x > col / 2) {
+      if (this.x > COL / 2) {
         // hit right wall
         kick = -1;
       } else {
@@ -197,7 +197,7 @@ class Piece {
         if (newY < 0) {
           continue;
         }
-        if (board[newY][newX] !== VACANT) {
+        if (board[newY][newX] != VACANT) {
           return true;
         }
       }
@@ -220,6 +220,31 @@ class Piece {
         board[this.y + r][this.x + c] = this.color;
       }
     }
+
+    //remove full rows
+    for (let r = 0; r < ROW; r++) {
+      let isRowFull = true;
+      for (let c = 0; c < COL; c++) {
+        isRowFull = isRowFull && board[r][c] !== VACANT;
+      }
+      if (isRowFull) {
+        // if row full, move above rows down
+        for (let y = r; y > 1; y--) {
+          for (let c = 0; c < COL; c++) {
+            board[y][c] = board[y - 1][c];
+          }
+        }
+
+        // top row board[0][...] has not row above it
+        for (let c = 0; c < COL; c++) {
+          board[0][c] = VACANT;
+        }
+        score += 10;
+      }
+    }
+    // update board
+    drawBoard();
+    scoreElement.innerHTML = score;
   }
 }
 
@@ -227,7 +252,10 @@ let p = new Piece(PIECES[0][0], PIECES[0][1]);
 
 p.draw();
 
+document.addEventListener('keydown', CONTROL);
+
 let dropStart = Date.now();
+let gameOver = false;
 function drop() {
   let now = Date.now();
   let delta = now - dropStart;
@@ -235,7 +263,9 @@ function drop() {
     p.moveDown();
     dropStart = Date.now();
   }
-  requestAnimationFrame(drop);
+  if (!gameOver) {
+    requestAnimationFrame(drop);
+  }
 }
 drop();
 
@@ -253,5 +283,3 @@ function CONTROL(event) {
     p.moveDown();
   }
 }
-
-document.addEventListener('keydown', CONTROL);
