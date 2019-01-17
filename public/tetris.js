@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 // import { I, J, L, O, S, T, Z } from './tetrominoes.js';
 
 const I = [
@@ -25,9 +26,9 @@ const O = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
 
 const S = [
   [[0, 1, 1], [1, 1, 0], [0, 0, 0]],
-  [[0, 1, 0], [0, 1, 1], [0, 0, 1]],
-  [[0, 0, 0], [0, 1, 1], [1, 1, 0]],
-  [[1, 0, 0], [1, 1, 0], [0, 1, 0]]
+  [[0, 1, 0], [0, 1, 1], [0, 0, 1]]
+  // [[0, 0, 0], [0, 1, 1], [1, 1, 0]],
+  // [[1, 0, 0], [1, 1, 0], [0, 1, 0]]
 ];
 
 const T = [
@@ -39,9 +40,9 @@ const T = [
 
 const Z = [
   [[1, 1, 0], [0, 1, 1], [0, 0, 0]],
-  [[0, 0, 1], [0, 1, 1], [0, 1, 0]],
-  [[0, 0, 0], [1, 1, 0], [0, 1, 1]],
-  [[0, 1, 0], [1, 1, 0], [1, 0, 0]]
+  [[0, 0, 1], [0, 1, 1], [0, 1, 0]]
+  // [[0, 0, 0], [1, 1, 0], [0, 1, 1]],
+  // [[0, 1, 0], [1, 1, 0], [1, 0, 0]]
 ];
 
 const canvas = document.getElementById('tetris');
@@ -114,18 +115,109 @@ class Piece {
     this.fill(VACANT);
   }
 
-  moveDown() {
-    this.unDraw();
-    this.y++;
-    this.draw();
-  }
-
   fill(color) {
     for (let r = 0; r < this.activeTetromino.length; r++) {
       for (let c = 0; c < this.activeTetromino.length; c++) {
         if (this.activeTetromino[r][c]) {
           drawSquare(this.x + c, this.y + r, color);
         }
+      }
+    }
+  }
+
+  // move piece right
+  moveRight() {
+    if (!this.collision(1, 0, this.activeTetromino)) {
+      this.unDraw();
+      this.x++;
+      this.draw();
+    }
+  }
+
+  // move piece left
+  moveLeft() {
+    if (!this.collision(-1, 0, this.activeTetromino)) {
+      this.unDraw();
+      this.x--;
+      this.draw();
+    }
+  }
+
+  // move piece down
+  moveDown() {
+    if (!this.collision(0, 1, this.activeTetromino)) {
+      this.unDraw();
+      this.y++;
+      this.draw();
+    } else {
+      this.lock();
+      p = randomPiece();
+    }
+  }
+
+  // rotate
+  rotate() {
+    let nextPattern = this.tetromino[
+      (this.directionIndex + 1) % this.tetromino.length
+    ];
+    let kick = 0;
+
+    if (this.collision(0, 0, nextPattern)) {
+      if (this.x > col / 2) {
+        // hit right wall
+        kick = -1;
+      } else {
+        // left wall
+        kick = 1;
+      }
+    }
+
+    if (!this.collision(kick, 0, nextPattern)) {
+      this.unDraw();
+      this.x += kick;
+      this.directionIndex = (this.directionIndex + 1) % this.tetromino.length;
+      this.activeTetromino = this.tetromino[this.directionIndex];
+      this.draw();
+    }
+  }
+
+  collision(x, y, piece) {
+    for (let r = 0; r < piece.lenth; r++) {
+      for (let c = 0; c < piece.length; c++) {
+        // if empty, skip
+        if (!piece[r][c]) {
+          continue;
+        }
+        let newX = this.x + c + x;
+        let newY = this.y + r + y;
+
+        if (newX < 0 || newX >= COL || newY >= ROW) {
+          return true;
+        }
+        if (newY < 0) {
+          continue;
+        }
+        if (board[newY][newX] !== VACANT) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  lock() {
+    for (let r = 0; r < this.activeTetromino.length; r++) {
+      for (let c = 0; c < this.activeTetromino.length; c++) {
+        if (!this.activeTetromino[r][c]) {
+          continue;
+        }
+        // game over
+        if (this.y + r < 0) {
+          alert('game over');
+          gameOver = true;
+          break;
+        }
+        board[this.y + r][this.x + c] = this.color;
       }
     }
   }
@@ -146,6 +238,20 @@ function drop() {
   requestAnimationFrame(drop);
 }
 drop();
-// drawSquare(5, 3, 'red');
-// drawSquare(3, 3, 'red');
-// drawSquare(3, 5, 'red');
+
+function CONTROL(event) {
+  if (event.keyCode === 37) {
+    p.moveLeft();
+    dropStart = Date.now();
+  } else if (event.keyCode === 38) {
+    p.rotate();
+    dropStart = Date.now();
+  } else if (event.keyCode === 39) {
+    p.moveRight();
+    dropStart = Date.now();
+  } else if (event.keyCode === 40) {
+    p.moveDown();
+  }
+}
+
+document.addEventListener('keydown', CONTROL);
