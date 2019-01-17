@@ -1,7 +1,7 @@
-import { I, J, L, O, S, T, Z } from './tetrominoes';
+// import { I, J, L, O, S, T, Z } from './tetrominoes';
 
 // draw square
-export default function drawSquare(x, y, color) {
+function drawSquare(x, y, color) {
   const canvas = document.getElementById('tetris');
   const context = canvas.getContext('2d');
   const scoreElement = document.getElementById('score');
@@ -17,3 +17,4 @@ export default function drawSquare(x, y, color) {
   context.strokeStyle = 'black';
   context.strokeRect(x * squareSize, y * squareSize, squareSize, squareSize);
 }
+drawSquare(1, 1, 'red');
