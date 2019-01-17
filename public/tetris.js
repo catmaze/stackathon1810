@@ -7,54 +7,45 @@ const I = [
   [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]],
   [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]]
 ];
-
 const J = [
   [[1, 0, 0], [1, 1, 1], [0, 0, 0]],
   [[0, 1, 1], [0, 1, 0], [0, 1, 0]],
   [[0, 0, 0], [1, 1, 1], [0, 0, 1]],
   [[0, 1, 0], [0, 1, 0], [1, 1, 0]]
 ];
-
 const L = [
   [[0, 0, 1], [1, 1, 1], [0, 0, 0]],
   [[0, 1, 0], [0, 1, 0], [0, 1, 1]],
   [[0, 0, 0], [1, 1, 1], [1, 0, 0]],
   [[1, 1, 0], [0, 1, 0], [0, 1, 0]]
 ];
-
 const O = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
-
 const S = [
   [[0, 1, 1], [1, 1, 0], [0, 0, 0]],
   [[0, 1, 0], [0, 1, 1], [0, 0, 1]]
-  // [[0, 0, 0], [0, 1, 1], [1, 1, 0]],
-  // [[1, 0, 0], [1, 1, 0], [0, 1, 0]]
 ];
-
 const T = [
   [[0, 1, 0], [1, 1, 1], [0, 0, 0]],
   [[0, 1, 0], [0, 1, 1], [0, 1, 0]],
   [[0, 0, 0], [1, 1, 1], [0, 1, 0]],
   [[0, 1, 0], [1, 1, 0], [0, 1, 0]]
 ];
-
 const Z = [
   [[1, 1, 0], [0, 1, 1], [0, 0, 0]],
   [[0, 0, 1], [0, 1, 1], [0, 1, 0]]
-  // [[0, 0, 0], [1, 1, 0], [0, 1, 1]],
-  // [[0, 1, 0], [1, 1, 0], [1, 0, 0]]
 ];
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 
+let gameOver = false;
+
 const ROW = 20;
-const COL = 20;
-// square size
+const COL = 10;
 const SQ = 20;
 const VACANT = 'WHITE';
-// draw square
+
 function drawSquare(x, y, color) {
   context.fillStyle = color;
   context.fillRect(x * SQ, y * SQ, SQ, SQ);
@@ -242,20 +233,26 @@ class Piece {
         score += 10;
       }
     }
-    // update board
+    // update boardf
     drawBoard();
     scoreElement.innerHTML = score;
   }
 }
 
-let p = new Piece(PIECES[0][0], PIECES[0][1]);
+function randomPiece() {
+  let r = Math.floor(Math.random() * PIECES.length); // 0 -> 6
+  return new Piece(PIECES[r][0], PIECES[r][1]);
+}
+
+let p = randomPiece();
+// let p = new Piece(PIECES[0][0], PIECES[0][1]);
 
 p.draw();
 
 document.addEventListener('keydown', CONTROL);
 
 let dropStart = Date.now();
-let gameOver = false;
+
 function drop() {
   let now = Date.now();
   let delta = now - dropStart;
