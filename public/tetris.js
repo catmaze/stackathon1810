@@ -40,7 +40,8 @@ const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 
 let gameOver = false;
-
+let p;
+let score = 0;
 const ROW = 20;
 const COL = 10;
 const SQ = 20;
@@ -173,7 +174,7 @@ class Piece {
   }
 
   collision(x, y, piece) {
-    for (let r = 0; r < piece.lenth; r++) {
+    for (let r = 0; r < piece.length; r++) {
       for (let c = 0; c < piece.length; c++) {
         // if empty, skip
         if (!piece[r][c]) {
@@ -244,7 +245,7 @@ function randomPiece() {
   return new Piece(PIECES[r][0], PIECES[r][1]);
 }
 
-let p = randomPiece();
+p = randomPiece();
 // let p = new Piece(PIECES[0][0], PIECES[0][1]);
 
 p.draw();
