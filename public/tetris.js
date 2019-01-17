@@ -107,18 +107,27 @@ class Piece {
 
   // draw piece on board
   draw() {
-    for (let r = 0; r < this.activeTetromino.length; r++) {
-      for (let c = 0; c < this.activeTetromino.length; c++) {
-        if (this.activeTetromino[r][c]) {
-          drawSquare(this.x + c, this.y + r, this.color);
-        }
-      }
-    }
+    this.fill(this.color);
+  }
+
+  unDraw() {
+    this.fill(VACANT);
   }
 
   moveDown() {
+    this.unDraw();
     this.y++;
     this.draw();
+  }
+
+  fill(color) {
+    for (let r = 0; r < this.activeTetromino.length; r++) {
+      for (let c = 0; c < this.activeTetromino.length; c++) {
+        if (this.activeTetromino[r][c]) {
+          drawSquare(this.x + c, this.y + r, color);
+        }
+      }
+    }
   }
 }
 
@@ -130,7 +139,7 @@ let dropStart = Date.now();
 function drop() {
   let now = Date.now();
   let delta = now - dropStart;
-  if (delta > 1000) {
+  if (delta > 300) {
     p.moveDown();
     dropStart = Date.now();
   }
