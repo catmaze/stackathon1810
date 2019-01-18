@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width initial-scale=1.0'>
-    <title>Boilermaker</title>
+    <meta charset="utf-8" />
+    <!-- <meta name="viewport" content="width=device-width initial-scale=1.0" /> -->
+    <title>Tetris</title>
     <link rel="stylesheet" href="/style.css" />
-    <script defer src="/bundle.js"></script>
+    <!-- <script defer src="/bundle.js"></script> -->
+    <script defer src="/tetris.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <!-- <div id="app"></div> -->
+    <div class="container">
+      <canvas id="tetris" width="200" height="400"></canvas>
+    </div>
+    <div>
+      Score:
+      <div id="score">0</div>
+    </div>
   </body>
 </html>
-
