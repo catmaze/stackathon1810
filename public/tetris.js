@@ -205,7 +205,7 @@ class Piece {
         }
         // game over
         if (this.y + r < 0) {
-          alert('game over');
+          console.log('game over');
           gameOver = true;
           break;
         }
@@ -217,7 +217,7 @@ class Piece {
     for (let r = 0; r < ROW; r++) {
       let isRowFull = true;
       for (let c = 0; c < COL; c++) {
-        isRowFull = isRowFull && board[r][c] !== VACANT;
+        isRowFull = isRowFull && board[r][c] != VACANT;
       }
       if (isRowFull) {
         // if row full, move above rows down
@@ -265,7 +265,6 @@ function drop() {
     requestAnimationFrame(drop);
   }
 }
-drop();
 
 function CONTROL(event) {
   if (event.keyCode === 37) {
@@ -281,3 +280,4 @@ function CONTROL(event) {
     p.moveDown();
   }
 }
+drop();
