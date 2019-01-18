@@ -37,14 +37,23 @@ const Z = [
   [[0, 0, 1], [0, 1, 1], [0, 1, 0]]
 ];
 const PIECES = [
-  [Z, 'red'],
-  [S, 'green'],
-  [T, 'yellow'],
-  [O, 'blue'],
+  [Z, 'purple'],
+  [S, 'purple'],
+  [T, 'purple'],
+  [O, 'purple'],
   [L, 'purple'],
-  [I, 'cyan'],
-  [J, 'orange']
+  [I, 'purple'],
+  [J, 'purple']
 ];
+// const PIECES = [
+//   [Z, 'red'],
+//   [S, 'green'],
+//   [T, 'yellow'],
+//   [O, 'blue'],
+//   [L, 'purple'],
+//   [I, 'cyan'],
+//   [J, 'orange']
+// ];
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
