@@ -1,6 +1,8 @@
 /* eslint-disable complexity */
 // import { I, J, L, O, S, T, Z } from './tetrominoes.js';
 
+// pieces
+
 const I = [
   [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
   [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]],
@@ -34,7 +36,15 @@ const Z = [
   [[1, 1, 0], [0, 1, 1], [0, 0, 0]],
   [[0, 0, 1], [0, 1, 1], [0, 1, 0]]
 ];
-
+const PIECES = [
+  [Z, 'red'],
+  [S, 'green'],
+  [T, 'yellow'],
+  [O, 'blue'],
+  [L, 'purple'],
+  [I, 'cyan'],
+  [J, 'orange']
+];
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
@@ -75,16 +85,6 @@ function drawBoard() {
 }
 
 drawBoard();
-
-const PIECES = [
-  [Z, 'red'],
-  [S, 'green'],
-  [T, 'yellow'],
-  [O, 'blue'],
-  [L, 'purple'],
-  [I, 'cyan'],
-  [J, 'orange']
-];
 
 class Piece {
   constructor(tetromino, color) {
