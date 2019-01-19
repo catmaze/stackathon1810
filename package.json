@@ -5,18 +5,14 @@
   "engines": {
     "node": ">= 7.0.0"
   },
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "deploy": "script/deploy",
-    "heroku-token": "script/encrypt-heroku-auth-token",
     "lint": "eslint ./ --ignore-path .gitignore",
     "lint-fix": "npm run lint -- --fix",
     "precommit": "lint-staged",
     "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
-    "start": "node server",
-    "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
-    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
+    "start": "electron ."
   },
   "lint-staged": {
     "*.{js,jsx}": [
@@ -33,10 +29,6 @@
   "license": "MIT",
   "dependencies": {
     "asar": "^0.14.6",
-    "axios": "^0.15.3",
-    "electron": "^4.0.1",
-    "express": "^4.16.3",
-    "morgan": "^1.9.1",
     "npm-merge-driver": "^2.3.5",
     "socket.io": "^2.1.1"
   },
@@ -55,9 +47,9 @@
     "@babel/preset-env": "^7.0.0-beta.55",
     "@babel/preset-react": "^7.0.0-beta.55",
     "@babel/register": "^7.0.0-beta.55",
-    "axios-mock-adapter": "^1.15.0",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^8.0.0-beta.4",
+    "electron": "4.0.1",
     "eslint": "^4.19.1",
     "eslint-config-fullstack": "^5.1.0",
     "eslint-config-prettier": "^2.9.0",
