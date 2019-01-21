@@ -287,7 +287,7 @@ document.addEventListener('keydown', CONTROL);
 
 // mobile controls
 // assumes desktop first
-if (typeof window.orientation !== 'undefined') {
+if (typeof window.orientationSensor === 'undefined') {
   document.getElementById('web-instructions').style.display = 'block';
 } else {
   // if mobile
@@ -297,7 +297,6 @@ if (typeof window.orientation !== 'undefined') {
   document.getElementById('move-r').addEventListener('mousedown', () => p.moveRight())
   document.getElementById('rotate').addEventListener('mousedown', () => p.rotate())
 }
-
 
 let dropStart = Date.now();
 
