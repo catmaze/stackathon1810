@@ -17,6 +17,10 @@ canvas {
 
 /******** below canvas ********/
 
+#instructions {
+  text-align: center;
+}
+
 #info-container {
   width: 100%;
   margin: 0.5em auto;

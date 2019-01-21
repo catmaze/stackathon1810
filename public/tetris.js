@@ -285,18 +285,7 @@ p.draw();
 
 document.addEventListener('keydown', CONTROL);
 
-// mobile controls
-// assumes desktop first
-if (typeof window.orientationSensor === 'undefined') {
-  document.getElementById('web-instructions').style.display = 'block';
-} else {
-  // if mobile
-  document.getElementById('mobile-controls').style.display = 'block';
-  document.getElementById('move-d').addEventListener('mousedown', () => p.moveDown())
-  document.getElementById('move-l').addEventListener('mousedown', () => p.moveLeft())
-  document.getElementById('move-r').addEventListener('mousedown', () => p.moveRight())
-  document.getElementById('rotate').addEventListener('mousedown', () => p.rotate())
-}
+
 
 let dropStart = Date.now();
 
@@ -326,4 +315,30 @@ function CONTROL(event) {
     p.moveDown();
   }
 }
+
+// mobile controls
+
+let toggleButton = document.getElementById('toggle-arrows')
+
+toggleButton.addEventListener('click', () => {
+  let aButtons = document.getElementById('mobile-controls');
+  let web = document.getElementById('web-instructions');
+
+  if(aButtons.style.display == 'block') {
+    // hide buttons
+    toggleButton.textContent = 'On-Screen buttons';
+    web.style.display = 'block'
+    aButtons.style.display = 'none';
+  } else {
+    // show buttons
+    toggleButton.textContent = 'Hide the buttons';
+    web.style.display = 'none'
+    aButtons.style.display = 'block';
+    document.getElementById('move-d').addEventListener('mousedown', () => p.moveDown())
+    document.getElementById('move-l').addEventListener('mousedown', () => p.moveLeft())
+    document.getElementById('move-r').addEventListener('mousedown', () => p.moveRight())
+    document.getElementById('rotate').addEventListener('mousedown', () => p.rotate())
+  }
+})
+
 drop();
