@@ -57,6 +57,7 @@ const PIECES = [
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
+const speedElement = document.getElementById('speed');
 
 let gameOver = false;
 let p;
@@ -105,6 +106,7 @@ class Piece {
 
     this.x = 3;
     this.y = -2;
+    this.gravity = 0.2;
   }
 
   // draw piece on board
@@ -214,8 +216,11 @@ class Piece {
         }
         // game over
         if (this.y + r < 0) {
-          console.log('game over');
           gameOver = true;
+          document.getElementsByTagName("BODY")[0].style.backgroundColor = "red";
+          document.getElementById("canvas-container").style.display = "none";
+          document.getElementById('instructions').textContent = ''
+          document.getElementById('speed-label').textContent = 'Max speed reached: '
           break;
         }
         board[this.y + r][this.x + c] = this.color;
@@ -243,9 +248,27 @@ class Piece {
         score += 10;
       }
     }
-    // update boardf
+    // update board
     drawBoard();
-    scoreElement.innerHTML = score;
+    scoreElement.innerHTML = `Score: ${score}`;
+  }
+  dropSpeed(score) {
+    if(score < 10) {
+      speedElement.textContent= '10 Km/h';
+      return 300
+    } else if (score < 20 ) {
+      speedElement.textContent= '15 Km/h';
+      return 200
+    } else if (score < 30) {
+      speedElement.textContent= '30 Km/h';
+      return 100
+    } else if (score < 40) {
+      speedElement.textContent= '60 Km/h';
+      return 50
+    } else if (score < 50 ){
+      speedElement.textContent= "It's over 5000!!!!";
+      return 20
+    }
   }
 }
 
@@ -255,18 +278,26 @@ function randomPiece() {
 }
 
 p = randomPiece();
-// let p = new Piece(PIECES[0][0], PIECES[0][1]);
 
 p.draw();
 
+// keyboard controls
+
 document.addEventListener('keydown', CONTROL);
+
+// mobile controls
+document.getElementById('move-d').addEventListener('mousedown', () => p.moveDown())
+document.getElementById('move-l').addEventListener('mousedown', () => p.moveLeft())
+document.getElementById('move-r').addEventListener('mousedown', () => p.moveRight())
+document.getElementById('rotate').addEventListener('mousedown', () => p.rotate())
+
 
 let dropStart = Date.now();
 
 function drop() {
   let now = Date.now();
   let delta = now - dropStart;
-  if (delta > 300) {
+  if (delta > p.dropSpeed(score)) {
     p.moveDown();
     dropStart = Date.now();
   }

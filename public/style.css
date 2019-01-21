@@ -1,41 +1,67 @@
 body {
   font-family: sans-serif;
+  transition: background-color 2s;
 }
 
-a {
-  text-decoration: none;
-}
+/******** canvas ********/
 
-label {
-  display: block;
-}
-
-nav a {
-  display: inline-block;
-  margin: 1em;
-}
-
-form div {
-  margin: 1em;
-  display: inline-block;
-}
-
-/* display */
-
-#score {
-  display: inline-block;
-}
-.container {
+#canvas-container {
   width: 100%;
   height: 100%;
 }
-div {
+
+canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+/******** below canvas ********/
+
+#info-container {
+  width: 100%;
+  margin: 0.5em auto;
+}
+
+#score-container, .arrow {
   font-size: 25px;
   font-weight: bold;
   font-family: monospace;
   text-align: center;
 }
-canvas {
-  display: block;
-  margin: 0 auto;
+
+#score {
+  display: inline-block;
+}
+
+/******** web buttons ********/
+
+#web-instructions {
+  display:none;
+  width: 40%;
+  margin: 0.5em auto;
+  text-align: center;
+}
+#web-instructions > div {
+}
+
+/******** arrow buttons ********/
+
+#mobile-controls {
+  text-align: center;
+}
+
+#mob-up-arrow {
+  margin: 0.5em 0.5em;
+}
+
+/******** mobile ********/
+
+@media only screen and (min-width: 600px) {
+  #mobile-controls {
+    align-items: center;
+    display:none;
+  }
+  #web-instructions {
+    display:block;
+  }
 }
