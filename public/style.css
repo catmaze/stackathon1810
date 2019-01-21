@@ -36,7 +36,6 @@ canvas {
 /******** web buttons ********/
 
 #web-instructions {
-  display:none;
   width: 40%;
   margin: 0.5em auto;
   text-align: center;
@@ -46,6 +45,7 @@ canvas {
 
 #mobile-controls {
   text-align: center;
+  display:none;
 }
 
 #mob-up-arrow {
@@ -54,7 +54,7 @@ canvas {
 
 /******** mobile ********/
 
-@media only screen and (min-width: 900px) {
+/* @media only screen and (min-width: 900px) {
   #mobile-controls {
     align-items: center;
     display:none;
@@ -62,4 +62,4 @@ canvas {
   #web-instructions {
     display:block;
   }
-}
+} */

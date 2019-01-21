@@ -286,10 +286,17 @@ p.draw();
 document.addEventListener('keydown', CONTROL);
 
 // mobile controls
-document.getElementById('move-d').addEventListener('mousedown', () => p.moveDown())
-document.getElementById('move-l').addEventListener('mousedown', () => p.moveLeft())
-document.getElementById('move-r').addEventListener('mousedown', () => p.moveRight())
-document.getElementById('rotate').addEventListener('mousedown', () => p.rotate())
+// assumes desktop first
+if (typeof window.orientation !== 'undefined') {
+  document.getElementById('web-instructions').style.display = 'block';
+} else {
+  // if mobile
+  document.getElementById('mobile-controls').style.display = 'block';
+  document.getElementById('move-d').addEventListener('mousedown', () => p.moveDown())
+  document.getElementById('move-l').addEventListener('mousedown', () => p.moveLeft())
+  document.getElementById('move-r').addEventListener('mousedown', () => p.moveRight())
+  document.getElementById('rotate').addEventListener('mousedown', () => p.rotate())
+}
 
 
 let dropStart = Date.now();
