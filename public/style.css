@@ -8,6 +8,7 @@ body {
 #canvas-container {
   width: 100%;
   height: 100%;
+  transition: 1s;
 }
 
 canvas {
@@ -19,6 +20,7 @@ canvas {
 
 #instructions {
   text-align: center;
+  transition: 1s;
 }
 
 #info-container {
@@ -27,7 +29,7 @@ canvas {
 }
 
 #score-container, .arrow {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   font-family: monospace;
   text-align: center;
@@ -35,6 +37,18 @@ canvas {
 
 #score {
   display: inline-block;
+}
+
+#go-buttons {
+  text-align: center;
+  display: none;
+  opacity: 0;
+  transition: 3s;
+  margin: 1em auto;
+}
+
+#restart-button {
+  font-size: 25px;
 }
 
 /******** web buttons ********/

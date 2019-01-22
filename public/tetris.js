@@ -218,8 +218,16 @@ class Piece {
         if (this.y + r < 0) {
           gameOver = true;
           document.getElementsByTagName("BODY")[0].style.backgroundColor = "red";
-          document.getElementById("canvas-container").style.display = "none";
-          document.getElementById('instructions').textContent = ''
+          document.getElementById("canvas-container").style.opacity = 0;
+          setTimeout(() => {
+            document.getElementById("canvas-container").style.display = "none";
+          }, 1500);
+          document.getElementById('instructions').style.opacity = 0;
+          document.getElementById('instructions').style.display = 'none';
+          setTimeout(() => {
+            document.getElementById("go-buttons").style.display = 'block';
+            document.getElementById("go-buttons").style.opacity = 1;
+          }, 2500)
           document.getElementById('speed-label').textContent = 'Max speed reached: '
           break;
         }
