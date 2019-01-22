@@ -18,7 +18,8 @@
     "appId": "001",
     "mac": {
       "category": "game"
-    }
+    },
+    "icon": "/public/icon.icos"
   },
   "lint-staged": {
     "*.{js,jsx}": [
