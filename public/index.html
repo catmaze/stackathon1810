@@ -4,47 +4,53 @@
     <meta charset="utf-8" />
     <!-- <meta name="viewport" content="width=device-width initial-scale=1.0" /> -->
     <title>Tetris</title>
+    <link rel="shortcut icon" href="tet_icon.svg" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
-    <script defer src="tetris.js"></script>
+    <script defer src="js/tetris.js"></script>
   </head>
   <body>
-    <div id="canvas-container">
-      <canvas id="tetris" width="200" height="400"></canvas>
-    </div>
-    <div id="info-container">
-      <div id="score-container">
-        <span id="score">Score: 0</span><br>
-        <span id="speed-label">Drop Speed: </span><span id="speed"> 1 Km/h</span>
+    <div class="container">
+      <div id="canvas-container">
+        <canvas id="tetris" width="200" height="500"></canvas>
       </div>
-      <div id="instructions">
-        <button id="toggle-arrows">On-Screen buttons</button>
 
-        <div id="web-instructions">
-            Control with arrow keys:
-          <div>
-            <span class="arrow">&uarr;</span> rotate piece
-          </div>
-          <div>
-              <span class="arrow">&harr;</span> move piece left/right
-          </div>
-          <div>
-              <span class="arrow">&darr;</span> speed down
-          </div>
+      <div id="info-container">
+
+        <div id="score-container">
+          <span id="score">Score: 0</span><br>
+          <span id="speed-label">Drop Speed: </span><span id="speed"></span>
         </div>
 
-        <div id="mobile-controls">
-          <div id="mob-up-arrow">
-            <button class="arrow" id="rotate">&uarr;</button>
+        <div id="instructions">
+          <button id="toggle-arrows">On-Screen buttons</button>
+
+          <div id="web-instructions">
+              Control with arrow keys:
+            <div>
+              <span class="arrow">&uarr;</span> rotate piece
+            </div>
+            <div>
+                <span class="arrow">&harr;</span> move piece left/right
+            </div>
+            <div>
+                <span class="arrow">&darr;</span> speed down
+            </div>
           </div>
-          <div>
-            <button class="arrow" id="move-l">&larr;</button>
-            <button class="arrow" id="move-d">&darr;</button>
-            <button class="arrow" id="move-r">&rarr;</button>
+
+          <div id="mobile-controls">
+            <div id="mob-up-arrow">
+              <button class="arrow" id="rotate">&uarr;</button>
+            </div>
+            <div>
+              <button class="arrow" id="move-l">&larr;</button>
+              <button class="arrow" id="move-d">&darr;</button>
+              <button class="arrow" id="move-r">&rarr;</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div id="go-buttons">
-        <button id="restart-button" onclick=location.reload()>Restart</button>
+        <div id="go-buttons">
+          <button id="restart-button" onclick=location.reload()>Restart</button>
+        </div>
       </div>
     </div>
   </body>

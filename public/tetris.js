@@ -3,6 +3,29 @@
 
 // pieces
 
+const CROSS = [
+  [
+    [0, 1, 1],
+    [1, 1, 1],
+    [0, 1, 0]
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 1],
+    [0, 1, 1]
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 1],
+    [1, 1, 0]
+  ],
+  [
+    [1, 1, 0],
+    [1, 1, 1],
+    [0, 1, 0]
+  ]
+];
+
 const I = [
   [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
   [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]],
@@ -43,17 +66,10 @@ const PIECES = [
   [O, 'purple'],
   [L, 'purple'],
   [I, 'purple'],
-  [J, 'purple']
+  [J, 'purple'],
+  [CROSS, 'purple']
 ];
-// const PIECES = [
-//   [Z, 'red'],
-//   [S, 'green'],
-//   [T, 'yellow'],
-//   [O, 'blue'],
-//   [L, 'purple'],
-//   [I, 'cyan'],
-//   [J, 'orange']
-// ];
+
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
@@ -62,7 +78,7 @@ const speedElement = document.getElementById('speed');
 let gameOver = false;
 let p;
 let score = 0;
-const ROW = 20;
+const ROW = 25;
 const COL = 10;
 const SQ = 20;
 const VACANT = 'WHITE';

@@ -3,6 +3,10 @@ body {
   transition: background-color 2s;
 }
 
+.container {
+  display: flex;
+}
+
 /******** canvas ********/
 
 #canvas-container {
@@ -18,17 +22,21 @@ canvas {
 
 /******** below canvas ********/
 
+#info-container {
+  width: 100%;
+}
+
+#info-container > div {
+  margin: 0.75em auto;
+}
+
 #instructions {
   text-align: center;
   transition: 1s;
 }
 
-#info-container {
-  width: 100%;
-  margin: 0.5em auto;
-}
-
-#score-container, .arrow {
+#score-container,
+.arrow {
   font-size: 20px;
   font-weight: bold;
   font-family: monospace;
@@ -63,21 +71,9 @@ canvas {
 
 #mobile-controls {
   text-align: center;
-  display:none;
+  display: none;
 }
 
 #mob-up-arrow {
   margin: 0.5em 0.5em;
 }
-
-/******** mobile ********/
-
-/* @media only screen and (min-width: 900px) {
-  #mobile-controls {
-    align-items: center;
-    display:none;
-  }
-  #web-instructions {
-    display:block;
-  }
-} */
