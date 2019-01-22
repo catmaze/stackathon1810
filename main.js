@@ -6,13 +6,16 @@ let win;
 
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 });
+  win = new BrowserWindow({
+    width: 800,
+    height: 600
+  });
 
   // and load the index.html of the app.
   win.loadFile('public/index.html');
 
   // Open the DevTools.
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -22,12 +25,32 @@ function createWindow() {
     win = null;
   });
 
+const aboutApp =
+`Originally meant to be a tetris clone + machine learning...
+the developer team of one (1) + trusted cats (2) had to settle on a clone with no MR`;
+const aboutDev =
+`Human Dev:
+https://www.linkedin.com/in/pavel-machuca/
+https://github.com/pavel6767/
+https://twitter.com/pavelmachuca
+
+Cat Devs:
+cats be cats`;
+
   const menu = Menu.buildFromTemplate([
     {
       label: 'Menu',
       submenu: [
         {
+          label: 'Restart',
+          accelerator: 'CmdOrCtrl+R',
+          click: () => {
+            BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
+          }
+        },
+        {
           label: 'Exit',
+          accelerator: 'CmdOrCtrl+Q',
           click() {
             app.quit();
           }
@@ -38,11 +61,23 @@ function createWindow() {
       label: 'About',
       submenu: [
         {
-          label: 'open a file',
+          label: 'The App',
           click() {
             console.log(
-              dialog.showOpenDialog({
-                properties: ['openFile', 'openDirectory', 'multiSelections', '']
+              dialog.showMessageBox({
+                title: 'FSA 1810 NYC - tetris clone',
+                message: aboutApp
+              })
+            );
+          }
+        },
+        {
+          label: 'The Dev',
+          click() {
+            console.log(
+              dialog.showMessageBox({
+                title: 'Human Dev + cat',
+                message: aboutDev
               })
             );
           }

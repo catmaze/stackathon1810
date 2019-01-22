@@ -3,6 +3,29 @@
 
 // pieces
 
+const CROSS = [
+  [
+    [0, 1, 1],
+    [1, 1, 1],
+    [0, 1, 0]
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 1],
+    [0, 1, 1]
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 1],
+    [1, 1, 0]
+  ],
+  [
+    [1, 1, 0],
+    [1, 1, 1],
+    [0, 1, 0]
+  ]
+];
+
 const I = [
   [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
   [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]],
@@ -43,28 +66,22 @@ const PIECES = [
   [O, 'purple'],
   [L, 'purple'],
   [I, 'purple'],
-  [J, 'purple']
+  [J, 'purple'],
+  [CROSS, 'purple']
 ];
-// const PIECES = [
-//   [Z, 'red'],
-//   [S, 'green'],
-//   [T, 'yellow'],
-//   [O, 'blue'],
-//   [L, 'purple'],
-//   [I, 'cyan'],
-//   [J, 'orange']
-// ];
+
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
+const speedElement = document.getElementById('speed');
 
 let gameOver = false;
 let p;
 let score = 0;
-const ROW = 20;
+const ROW = 25;
 const COL = 10;
 const SQ = 20;
-const EMPTY = 'white';
+const VACANT = 'WHITE';
 
 function drawSquare(x, y, color) {
   context.fillStyle = color;
@@ -80,7 +97,7 @@ let board = [];
 for (let r = 0; r < ROW; r++) {
   board[r] = [];
   for (let c = 0; c < COL; c++) {
-    board[r][c] = EMPTY;
+    board[r][c] = VACANT;
   }
 }
 
@@ -105,6 +122,7 @@ class Piece {
 
     this.x = 3;
     this.y = -2;
+    this.gravity = 0.2;
   }
 
   // draw piece on board
@@ -113,7 +131,7 @@ class Piece {
   }
 
   unDraw() {
-    this.fill(EMPTY);
+    this.fill(VACANT);
   }
 
   fill(color) {
@@ -198,7 +216,7 @@ class Piece {
         if (newY < 0) {
           continue;
         }
-        if (board[newY][newX] != EMPTY) {
+        if (board[newY][newX] != VACANT) {
           return true;
         }
       }
@@ -214,8 +232,19 @@ class Piece {
         }
         // game over
         if (this.y + r < 0) {
-          console.log('game over');
           gameOver = true;
+          document.getElementsByTagName("BODY")[0].style.backgroundColor = "red";
+          document.getElementById("canvas-container").style.opacity = 0;
+          setTimeout(() => {
+            document.getElementById("canvas-container").style.display = "none";
+          }, 1500);
+          document.getElementById('instructions').style.opacity = 0;
+          document.getElementById('instructions').style.display = 'none';
+          setTimeout(() => {
+            document.getElementById("go-buttons").style.display = 'block';
+            document.getElementById("go-buttons").style.opacity = 1;
+          }, 2500)
+          document.getElementById('speed-label').textContent = 'Max speed reached: '
           break;
         }
         board[this.y + r][this.x + c] = this.color;
@@ -226,7 +255,7 @@ class Piece {
     for (let r = 0; r < ROW; r++) {
       let isRowFull = true;
       for (let c = 0; c < COL; c++) {
-        isRowFull = isRowFull && board[r][c] != EMPTY;
+        isRowFull = isRowFull && board[r][c] != VACANT;
       }
       if (isRowFull) {
         // if row full, move above rows down
@@ -238,14 +267,32 @@ class Piece {
 
         // top row board[0][...] has not row above it
         for (let c = 0; c < COL; c++) {
-          board[0][c] = EMPTY;
+          board[0][c] = VACANT;
         }
         score += 10;
       }
     }
-    // update boardf
+    // update board
     drawBoard();
-    scoreElement.innerHTML = score;
+    scoreElement.innerHTML = `Score: ${score}`;
+  }
+  dropSpeed(score) {
+    if(score < 10) {
+      speedElement.textContent= '10 Km/h';
+      return 300
+    } else if (score < 20 ) {
+      speedElement.textContent= '15 Km/h';
+      return 200
+    } else if (score < 30) {
+      speedElement.textContent= '30 Km/h';
+      return 100
+    } else if (score < 40) {
+      speedElement.textContent= '60 Km/h';
+      return 50
+    } else if (score < 50 ){
+      speedElement.textContent= "It's over 5000!!!!";
+      return 20
+    }
   }
 }
 
@@ -255,18 +302,21 @@ function randomPiece() {
 }
 
 p = randomPiece();
-// let p = new Piece(PIECES[0][0], PIECES[0][1]);
 
 p.draw();
 
+// keyboard controls
+
 document.addEventListener('keydown', CONTROL);
+
+
 
 let dropStart = Date.now();
 
 function drop() {
   let now = Date.now();
   let delta = now - dropStart;
-  if (delta > 300) {
+  if (delta > p.dropSpeed(score)) {
     p.moveDown();
     dropStart = Date.now();
   }
@@ -289,4 +339,30 @@ function CONTROL(event) {
     p.moveDown();
   }
 }
+
+// mobile controls
+
+let toggleButton = document.getElementById('toggle-arrows')
+
+toggleButton.addEventListener('click', () => {
+  let aButtons = document.getElementById('mobile-controls');
+  let web = document.getElementById('web-instructions');
+
+  if(aButtons.style.display == 'block') {
+    // hide buttons
+    toggleButton.textContent = 'On-Screen buttons';
+    web.style.display = 'block'
+    aButtons.style.display = 'none';
+  } else {
+    // show buttons
+    toggleButton.textContent = 'Hide the buttons';
+    web.style.display = 'none'
+    aButtons.style.display = 'block';
+    document.getElementById('move-d').addEventListener('mousedown', () => p.moveDown())
+    document.getElementById('move-l').addEventListener('mousedown', () => p.moveLeft())
+    document.getElementById('move-r').addEventListener('mousedown', () => p.moveRight())
+    document.getElementById('rotate').addEventListener('mousedown', () => p.rotate())
+  }
+})
+
 drop();
