@@ -4,26 +4,10 @@
 // pieces
 
 const CROSS = [
-  [
-    [0, 1, 1],
-    [1, 1, 1],
-    [0, 1, 0]
-  ],
-  [
-    [0, 1, 0],
-    [1, 1, 1],
-    [0, 1, 1]
-  ],
-  [
-    [0, 1, 0],
-    [1, 1, 1],
-    [1, 1, 0]
-  ],
-  [
-    [1, 1, 0],
-    [1, 1, 1],
-    [0, 1, 0]
-  ]
+  [[0, 1, 1], [1, 1, 1], [0, 1, 0]],
+  [[0, 1, 0], [1, 1, 1], [0, 1, 1]],
+  [[0, 1, 0], [1, 1, 1], [1, 1, 0]],
+  [[1, 1, 0], [1, 1, 1], [0, 1, 0]]
 ];
 
 const I = [
@@ -233,18 +217,20 @@ class Piece {
         // game over
         if (this.y + r < 0) {
           gameOver = true;
-          document.getElementsByTagName("BODY")[0].style.backgroundColor = "red";
-          document.getElementById("canvas-container").style.opacity = 0;
+          document.getElementsByTagName('BODY')[0].style.backgroundColor =
+            'red';
+          document.getElementById('canvas-container').style.opacity = 0;
           setTimeout(() => {
-            document.getElementById("canvas-container").style.display = "none";
+            document.getElementById('canvas-container').style.display = 'none';
           }, 1500);
           document.getElementById('instructions').style.opacity = 0;
           document.getElementById('instructions').style.display = 'none';
           setTimeout(() => {
-            document.getElementById("go-buttons").style.display = 'block';
-            document.getElementById("go-buttons").style.opacity = 1;
-          }, 2500)
-          document.getElementById('speed-label').textContent = 'Max speed reached: '
+            document.getElementById('go-buttons').style.display = 'block';
+            document.getElementById('go-buttons').style.opacity = 1;
+          }, 2500);
+          document.getElementById('speed-label').textContent =
+            'Max speed reached: ';
           break;
         }
         board[this.y + r][this.x + c] = this.color;
@@ -277,21 +263,21 @@ class Piece {
     scoreElement.innerHTML = `Score: ${score}`;
   }
   dropSpeed(score) {
-    if(score < 10) {
-      speedElement.textContent= '10 Km/h';
-      return 300
-    } else if (score < 20 ) {
-      speedElement.textContent= '15 Km/h';
-      return 200
+    if (score < 10) {
+      speedElement.textContent = '10 Km/h';
+      return 300;
+    } else if (score < 20) {
+      speedElement.textContent = '15 Km/h';
+      return 200;
     } else if (score < 30) {
-      speedElement.textContent= '30 Km/h';
-      return 100
+      speedElement.textContent = '30 Km/h';
+      return 100;
     } else if (score < 40) {
-      speedElement.textContent= '60 Km/h';
-      return 50
-    } else if (score < 50 ){
-      speedElement.textContent= "It's over 5000!!!!";
-      return 20
+      speedElement.textContent = '60 Km/h';
+      return 50;
+    } else if (score < 50) {
+      speedElement.textContent = "It's over 5000!!!!";
+      return 20;
     }
   }
 }
@@ -308,8 +294,6 @@ p.draw();
 // keyboard controls
 
 document.addEventListener('keydown', CONTROL);
-
-
 
 let dropStart = Date.now();
 
@@ -342,27 +326,35 @@ function CONTROL(event) {
 
 // mobile controls
 
-let toggleButton = document.getElementById('toggle-arrows')
+let toggleButton = document.getElementById('toggle-arrows');
 
 toggleButton.addEventListener('click', () => {
   let aButtons = document.getElementById('mobile-controls');
   let web = document.getElementById('web-instructions');
 
-  if(aButtons.style.display == 'block') {
+  if (aButtons.style.display == 'block') {
     // hide buttons
     toggleButton.textContent = 'On-Screen buttons';
-    web.style.display = 'block'
+    web.style.display = 'block';
     aButtons.style.display = 'none';
   } else {
     // show buttons
     toggleButton.textContent = 'Hide the buttons';
-    web.style.display = 'none'
+    web.style.display = 'none';
     aButtons.style.display = 'block';
-    document.getElementById('move-d').addEventListener('mousedown', () => p.moveDown())
-    document.getElementById('move-l').addEventListener('mousedown', () => p.moveLeft())
-    document.getElementById('move-r').addEventListener('mousedown', () => p.moveRight())
-    document.getElementById('rotate').addEventListener('mousedown', () => p.rotate())
+    document
+      .getElementById('move-d')
+      .addEventListener('mousedown', () => p.moveDown());
+    document
+      .getElementById('move-l')
+      .addEventListener('mousedown', () => p.moveLeft());
+    document
+      .getElementById('move-r')
+      .addEventListener('mousedown', () => p.moveRight());
+    document
+      .getElementById('rotate')
+      .addEventListener('mousedown', () => p.rotate());
   }
-})
+});
 
 drop();
